@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Security Scan Before Write",
+  "description": "Scans any file Kiro is about to write for hardcoded secrets, API keys, or credentials before committing the change.",
+  "version": "1",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": ["write"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Before writing this file, perform a quick security scan on the content that is about to be written:\n\n1. Check for hardcoded secrets: API keys, tokens, passwords, private keys, or connection strings.\n2. Check for any value that matches patterns like: `ghp_`, `sk-`, `Bearer `, `password =`, `secret =`, `token =`.\n3. Check for IP addresses or database URLs that should be in environment variables.\n\nIf you find any potential secrets:\n- STOP — do NOT write the file.\n- Clearly tell the user what was found and on which line.\n- Suggest replacing it with an environment variable reference instead.\n\nIf the content is clean, allow the write to proceed silently."
+  }
+}

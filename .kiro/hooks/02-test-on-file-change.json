@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Run Unit Tests on File Change",
+  "description": "Automatically runs the full unit test suite whenever a TypeScript source file is saved. If tests fail, Kiro analyses the failure and suggests a fix.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["src/**/*.ts"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A source file was just edited. Do the following:\n\n1. Run the full test suite using the command: `npm test -- --passWithNoTests 2>&1`\n2. If ALL tests pass: report a short summary — how many passed, how many suites ran.\n3. If ANY test fails:\n   a. Show which test failed and the exact error message.\n   b. Analyse the failure — is it a logic bug, a missing null check, or a type error?\n   c. Propose a minimal fix and ask the user for approval before applying it.\n4. Never skip steps. Always run the tests first."
+  }
+}

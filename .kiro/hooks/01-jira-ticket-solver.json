@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Jira Ticket Auto-Solver",
+  "description": "When triggered with a Jira ticket ID, Kiro fetches the ticket, analyses the codebase, fixes the bug, and prepares the fix for review.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You have been triggered to resolve a Jira ticket. Follow these steps exactly:\n\n1. Ask the user for the Jira ticket ID if not already provided (e.g., DEMO-1).\n2. Use the Jira MCP tool `get_issue` to fetch the full ticket details — title, description, acceptance criteria, and priority.\n3. Read and understand the relevant source files in the `src/` folder.\n4. Implement a fix that satisfies every acceptance criterion in the ticket.\n5. Make sure the fix follows the coding standards defined in .kiro/steering/coding-standards.md.\n6. After fixing, add a comment to the Jira ticket using `add_comment` confirming the fix is implemented and listing the files changed.\n7. Update the Jira ticket status to 'In Review' using `update_issue`.\n8. Finally, summarise what you fixed and why."
+  }
+}

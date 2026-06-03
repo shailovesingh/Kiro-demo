@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Push Fix to GitHub & Create PR",
+  "description": "When the Kiro agent finishes a task that includes a code fix, this hook automatically creates a branch, commits the changes, pushes to GitHub, and opens a pull request using the GitHub MCP.",
+  "version": "1",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "The agent has just completed a task. Check if any source files in `src/` or `tests/` were modified during this session.\n\nIf files WERE modified, do the following using the GitHub MCP:\n\n1. Determine the Jira ticket ID from the recent conversation context (e.g., DEMO-1). If none found, use 'fix/auto-patch'.\n2. Create a new branch named: `fix/<TICKET-ID>-<short-kebab-description>` (e.g., fix/DEMO-1-division-by-zero).\n3. Commit all changed files to that branch. Use this commit message format:\n   `fix(<scope>): <what was fixed> — resolves <TICKET-ID>`\n   Example: `fix(calculator): throw error on division by zero — resolves DEMO-1`\n4. Push the branch to the remote repository using `push_files`.\n5. Create a pull request with:\n   - Title: same as commit message\n   - Body: include the Jira ticket ID, what was changed, and what tests now pass\n   - Base branch: main\n6. Report the PR URL to the user.\n\nIf NO files were modified, do nothing and stay silent."
+  }
+}
