@@ -11,15 +11,16 @@ export class Calculator {
     return a * b;
   }
 
-  // BUG (DEMO-1): No division-by-zero guard.
-  // Returns Infinity when b = 0 instead of throwing an error.
   divide(a: number, b: number): number {
+    if (b === 0) {
+      throw new Error(
+        `Calculator.divide: Division by zero is not allowed. Received divisor: 0`
+      );
+    }
     return a / b;
   }
 
-  // BUG (DEMO-3): Returns wrong result for negative numbers.
-  // Should return -n for negative input, but returns n unchanged.
   absoluteValue(n: number): number {
-    return n > 0 ? n : n;
+    return n < 0 ? -n : n;
   }
 }

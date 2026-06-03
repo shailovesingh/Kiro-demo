@@ -11,12 +11,12 @@ export class UserService {
     this.users.push(user);
   }
 
-  // BUG (DEMO-2): Crashes with TypeError when a user has no email.
-  // Accessing .toLowerCase() on undefined throws:
-  // "Cannot read properties of undefined (reading 'toLowerCase')"
   getUserEmail(id: number): string {
     const user = this.users.find((u) => u.id === id);
-    return user!.email.toLowerCase();
+    if (!user) {
+      throw new Error(`UserService.getUserEmail: User with ID ${id} not found`);
+    }
+    return user.email?.toLowerCase() ?? '';
   }
 
   getUserById(id: number): User | undefined {
