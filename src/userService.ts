@@ -11,6 +11,7 @@ export class UserService {
     this.users.push(user);
   }
 
+  // FIX (DEMO-2): Handle undefined email gracefully.
   getUserEmail(id: number): string {
     const user = this.users.find((u) => u.id === id);
     if (!user) {
